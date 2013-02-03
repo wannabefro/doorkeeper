@@ -44,7 +44,7 @@ module Doorkeeper
         @access_token = Doorkeeper::AccessToken.create!({
           application_id:    refresh_token.application_id,
           resource_owner_id: refresh_token.resource_owner_id,
-          scopes:            refresh_token.scopes_string,
+          scope:             refresh_token.scope,
           expires_in:        server.access_token_expires_in,
           use_refresh_token: true
         })

@@ -25,7 +25,7 @@ module Doorkeeper
       end
 
       def scopes
-        Scopes.from_string scope
+        Doorkeeper.parse_scope scope
       end
 
       def scope

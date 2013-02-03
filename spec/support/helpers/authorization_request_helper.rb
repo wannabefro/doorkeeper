@@ -9,11 +9,11 @@ module AuthorizationRequestHelper
   end
 
   def default_scopes_exist(*scopes)
-    Doorkeeper.configuration.instance_variable_set(:@default_scopes, Doorkeeper::OAuth::Scopes.from_array(scopes))
+    Doorkeeper.configuration.instance_variable_set(:@default_scopes, Doorkeeper.parse_scope(scopes))
   end
 
   def optional_scopes_exist(*scopes)
-    Doorkeeper.configuration.instance_variable_set(:@optional_scopes, Doorkeeper::OAuth::Scopes.from_array(scopes))
+    Doorkeeper.configuration.instance_variable_set(:@optional_scopes, Doorkeeper.parse_scope(scopes))
   end
 
   def client_should_be_authorized(client)

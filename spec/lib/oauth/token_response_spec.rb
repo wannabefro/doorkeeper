@@ -20,7 +20,7 @@ module Doorkeeper::OAuth
         mock :access_token, {
           token: 'some-token',
           expires_in: '3600',
-          scopes_string: 'two scopes',
+          scope: 'two scopes',
           refresh_token: 'some-refresh-token',
           token_type: 'bearer'
         }

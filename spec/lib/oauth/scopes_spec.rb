@@ -3,113 +3,117 @@ require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/string'
 require 'doorkeeper/oauth/scopes'
 
-module Doorkeeper::OAuth
-  describe Scopes do
-    describe :add do
-      it 'allows you to add scopes with symbols' do
-        subject.add :public
-        subject.all.should == [:public]
-      end
+describe Doorkeeper::OAuth::Scopes do
+  def scope(string)
+    described_class.parse string
+  end
 
-      it 'allows you to add scopes with strings' do
-        subject.add "public"
-        subject.all.should == [:public]
-      end
+  it 'accepts symbols' do
+    subject.add :public
+    subject.all.should == [:public]
+  end
 
-      it 'do not add already included scopes' do
-        subject.add :public
-        subject.add :public
-        subject.all.should == [:public]
-      end
+  it 'accepts strings' do
+    subject.add "public"
+    subject.all.should == [:public]
+  end
+
+  it 'are unique' do
+    subject.add :public
+    subject.add :public
+    subject.all.should == [:public]
+  end
+
+  describe :exists? do
+    before do
+      subject.add :public
     end
 
-    describe :exists do
-      before do
-        subject.add :public
-      end
-
-      it 'returns true if scope with given name is present' do
-        subject.exists?("public").should be_true
-      end
-
-      it 'returns false if scope with given name does not exist' do
-        subject.exists?("other").should be_false
-      end
-
-      it 'handles symbols' do
-        subject.exists?(:public).should be_true
-        subject.exists?(:other).should be_false
-      end
+    it 'is true when scope is present' do
+      subject.exists?("public").should be_true
     end
 
-    describe ".from_string" do
-      let(:string) { "public write" }
-
-      subject { Scopes.from_string(string) }
-
-      it { should be_a(Scopes) }
-      its(:all) { should == [:public, :write] }
+    it 'is false when scope is not present' do
+      subject.exists?("other").should be_false
     end
 
-    describe :+ do
-      it "can add to another scope object" do
-        scopes = Scopes.from_string("public") + Scopes.from_string("admin")
-        scopes.all.should == [:public, :admin]
-      end
+    it 'accepts symbols as arguments' do
+      subject.exists?(:public).should be_true
+      subject.exists?(:other).should be_false
+    end
+  end
 
-      it "does not change the existing object" do
-        origin = Scopes.from_string("public")
-        new_scope = origin + Scopes.from_string("admin")
-        origin.to_s.should == "public"
-      end
-
-      it "raises an error if cannot handle addition" do
-        expect {
-          Scopes.from_string("public") + "admin"
-        }.to raise_error(NoMethodError)
-      end
+  describe '.parse' do
+    it 'parses strings' do
+      scope = scope "public write"
+      scope.should == [:public, :write]
     end
 
-    describe :== do
-      it 'is equal to another set of scopes' do
-        Scopes.from_string("public").should == Scopes.from_string("public")
-      end
+    it 'parses arrays' do
+      scope = described_class.parse [:public, :write]
+      scope.should == [:public, :write]
+    end
+  end
 
-      it 'is equal to another set of scopes with no particular order' do
-        Scopes.from_string("public write").should == Scopes.from_string("write public")
-      end
-
-      it 'differs from another set of scopes when scopes are not the same' do
-        Scopes.from_string("public write").should_not == Scopes.from_string("write")
-      end
+  describe :+ do
+    it 'adds two scopes' do
+      scopes = scope("public") + scope("admin")
+      scopes.all.should == [:public, :admin]
     end
 
-    describe :has_scopes? do
-      subject { Scopes.from_string("public admin") }
+    it 'returns a new object' do
+      origin    = scope("public")
+      new_scope = origin + scope("admin")
 
-      it "returns true when at least one scope is included" do
-        subject.has_scopes?(Scopes.from_string("public")).should be_true
-      end
+      origin.object_id.should_not eq new_scope.object_id
+    end
 
-      it "returns true when all scopes are included" do
-        subject.has_scopes?(Scopes.from_string("public admin")).should be_true
-      end
+    it 'raises an error if cannot handle addition' do
+      expect {
+        scope('public') + 'admin'
+      }.to raise_error(NoMethodError)
+    end
+  end
 
-      it "is true if all scopes are included in any order" do
-        subject.has_scopes?(Scopes.from_string("admin public")).should be_true
-      end
+  describe :== do
+    it 'is equal to another set of scopes' do
+      scope("public").should == scope("public")
+    end
 
-      it "is false if no scopes are included" do
-        subject.has_scopes?(Scopes.from_string("notexistent")).should be_false
-      end
+    it 'is equal to another set of scopes with no particular order' do
+      scope("public write").should == scope("write public")
+    end
 
-      it "returns false when any scope is not included" do
-        subject.has_scopes?(Scopes.from_string("public nope")).should be_false
-      end
+    it 'differs from another set of scopes when scopes are not the same' do
+      scope("public write").should_not == scope("write")
+    end
+  end
 
-      it "is false if no scopes are included even for existing ones" do
-        subject.has_scopes?(Scopes.from_string("public admin notexistent")).should be_false
-      end
+  describe :has_scopes? do
+    subject { scope("public admin") }
+
+    it "is true when at least one scope is included" do
+      subject.has_scopes?(scope("public")).should be_true
+    end
+
+    it "is true when all scopes are included" do
+      subject.has_scopes?(scope("public admin")).should be_true
+    end
+
+    it "is true if all scopes are included in any order" do
+      subject.has_scopes?(scope("admin public")).should be_true
+    end
+
+    it "is false if no scopes are included" do
+      subject.has_scopes?(scope("notexistent")).should be_false
+    end
+
+    it "is false when any scope is not included" do
+      subject.has_scopes?(scope("public nope")).should be_false
+    end
+
+    it "is false if no scopes are included even for existing ones" do
+      subject.has_scopes?(scope("public admin notexistent")).should be_false
     end
   end
 end

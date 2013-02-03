@@ -82,58 +82,58 @@ module Doorkeeper
     describe '.matching_token_for' do
       let(:resource_owner_id) { 100 }
       let(:application)       { create :application }
-      let(:scopes)            { Doorkeeper::OAuth::Scopes.from_string("public write") }
+      let(:scope)             { Doorkeeper.parse_scope("public write") }
       let(:default_attributes) do
-        { application: application, resource_owner_id: resource_owner_id, scopes: scopes.to_s }
+        { application: application, resource_owner_id: resource_owner_id, scope: scope.to_s }
       end
 
       it 'returns only one token' do
         token = create :access_token, default_attributes
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should == token
       end
 
       it 'accepts resource owner as object' do
         resource_owner = stub(to_key: true, id: 100)
         token = create :access_token, default_attributes
-        last_token = AccessToken.matching_token_for(application, resource_owner, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner, scope)
         last_token.should == token
       end
 
       it 'accepts nil as resource owner' do
         token = create :access_token, default_attributes.merge(resource_owner_id: nil)
-        last_token = AccessToken.matching_token_for(application, nil, scopes)
+        last_token = AccessToken.matching_token_for(application, nil, scope)
         last_token.should == token
       end
 
       it 'excludes revoked tokens' do
         create :access_token, default_attributes.merge(revoked_at: 1.day.ago)
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should be_nil
       end
 
       it 'matches the application' do
         token = create :access_token, default_attributes.merge(application: create(:application))
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should be_nil
       end
 
       it 'matches the resource owner' do
         create :access_token, default_attributes.merge(resource_owner_id: 2)
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should be_nil
       end
 
       it 'matches the scopes' do
-        create :access_token, default_attributes.merge(scopes: 'public email')
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        create :access_token, default_attributes.merge(scope: 'public email')
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should be_nil
       end
 
       it 'returns the last created token' do
         create :access_token, default_attributes.merge(created_at: 1.day.ago)
         token = create :access_token, default_attributes
-        last_token = AccessToken.matching_token_for(application, resource_owner_id, scopes)
+        last_token = AccessToken.matching_token_for(application, resource_owner_id, scope)
         last_token.should == token
       end
 
@@ -141,13 +141,12 @@ module Doorkeeper
         token = create :access_token, default_attributes
         token_hash = {
                       resource_owner_id: token.resource_owner_id,
-                      scopes: token.scopes,
+                      scope: token.scope,
                       expires_in_seconds: token.seconds_to_expire,
                       application: { uid: token.application.uid }
                      }
         token.as_json.should eq token_hash
       end
     end
-
   end
 end

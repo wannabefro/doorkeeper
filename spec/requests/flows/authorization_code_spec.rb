@@ -93,7 +93,7 @@ feature 'Authorization Code Flow' do
     end
 
     scenario 'returns new token if scopes have changed' do
-      client_is_authorized(@client, @resource_owner, scopes: "public write")
+      client_is_authorized(@client, @resource_owner, scope: "public write")
       visit authorization_endpoint_url(client: @client, scope: "public")
       click_on "Authorize"
 

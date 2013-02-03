@@ -5,28 +5,23 @@ require 'doorkeeper/models/scopes'
 
 describe 'Doorkeeper::Models::Scopes' do
   subject do
-    Class.new(Hash) do
+    Class.new do
       include Doorkeeper::Models::Scopes
+      attr_accessor :scope
     end.new
   end
 
   before do
-    subject[:scopes] = 'public admin'
+    subject.scope = 'public admin'
   end
 
-  describe :scopes do
+  describe :oauth_scope do
     it 'is a `Scopes` class' do
-      subject.scopes.should be_a(Doorkeeper::OAuth::Scopes)
+      subject.oauth_scope.should be_a(Doorkeeper::OAuth::Scopes)
     end
 
     it 'includes scopes' do
-      subject.scopes.should include(:public)
-    end
-  end
-
-  describe :scopes_string do
-    it 'is a `Scopes` class' do
-      subject.scopes_string.should == 'public admin'
+      subject.oauth_scope.should include(:public)
     end
   end
 end

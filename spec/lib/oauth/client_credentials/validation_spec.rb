@@ -20,7 +20,7 @@ class Doorkeeper::OAuth::ClientCredentialsRequest
 
     context 'with scopes' do
       it 'is invalid when scopes are not included in the server' do
-        server.stub scopes: Doorkeeper::OAuth::Scopes.from_string('email')
+        server.stub scopes: Doorkeeper.parse_scope('email')
         request.stub original_scopes: 'invalid'
         subject.should_not be_valid
       end

@@ -37,7 +37,7 @@ module Doorkeeper
 
       def scopes
         @scopes ||= if @original_scopes.present?
-          Doorkeeper::OAuth::Scopes.from_string(@original_scopes)
+          Doorkeeper.parse_scope(@original_scopes)
         else
           server.default_scopes
         end
@@ -49,7 +49,7 @@ module Doorkeeper
         @access_token = Doorkeeper::AccessToken.create!({
           application_id:     client.id,
           resource_owner_id:  resource_owner.id,
-          scopes:             scopes.to_s,
+          scope:              scopes.to_s,
           expires_in:         server.access_token_expires_in,
           use_refresh_token:  server.refresh_token_enabled?
         })

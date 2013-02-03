@@ -37,7 +37,7 @@ module Doorkeeper
     # TODO: move this to Token class
     def validate_token_scopes(token)
       return true if @scopes.blank?
-      token.scopes.any? { |scope| @scopes.include? scope}
+      token.oauth_scope.any? { |scope| @scopes.include? scope }
     end
   end
 

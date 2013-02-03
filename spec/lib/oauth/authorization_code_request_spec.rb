@@ -18,7 +18,7 @@ module Doorkeeper::OAuth
 
     it "issues the token with same grant's scopes" do
       subject.authorize
-      Doorkeeper::AccessToken.last.scopes.should == grant.scopes
+      Doorkeeper::AccessToken.last.scope.should == grant.scope
     end
 
     it 'revokes the grant' do

@@ -11,7 +11,7 @@ module Doorkeeper
     validates :refresh_token, uniqueness: true, if: :use_refresh_token?
 
     attr_accessor :use_refresh_token
-    attr_accessible :application_id, :resource_owner_id, :expires_in, :scopes, :use_refresh_token
+    attr_accessible :application_id, :resource_owner_id, :expires_in, :scope, :use_refresh_token
 
     before_validation :generate_token, on: :create
     before_validation :generate_refresh_token, on: :create, if: :use_refresh_token?
@@ -31,7 +31,7 @@ module Doorkeeper
     def self.matching_token_for(application, resource_owner_or_id, scopes)
       resource_owner_id = resource_owner_or_id.respond_to?(:to_key) ? resource_owner_or_id.id : resource_owner_or_id
       token = last_authorized_token_for(application, resource_owner_id)
-      token if token && ScopeChecker.matches?(token.scopes, scopes)
+      token if token && ScopeChecker.matches?(token.oauth_scope, scopes)
     end
 
     def token_type
@@ -42,10 +42,10 @@ module Doorkeeper
       self.use_refresh_token
     end
 
-    def as_json(options={})
+    def as_json(options = {})
       {
         resource_owner_id: self.resource_owner_id,
-        scopes: self.scopes,
+        scope: self.scope,
         expires_in_seconds: self.seconds_to_expire,
         application: { uid: self.application.uid }
       }
