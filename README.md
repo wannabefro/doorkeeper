@@ -257,14 +257,14 @@ If you want to upgrade doorkeeper to a new version, check out the [upgrading not
 To run the local engine server:
 
 ```
-rails=3.2.8 orm=active_record bundle install
-rails=3.2.8 orm=active_record bundle exec rails server
+rails=3.2.11 orm=active_record bundle install
+rails=3.2.11 orm=active_record bundle exec rails server
 ````
 
 By default, it uses the latest Rails version with ActiveRecord. To run the tests:
 
 ```
-rails=3.2.8 orm=active_record bundle exec rake
+rails=3.2.11 orm=active_record bundle exec rake
 ```
 
 Or you might prefer to run `script/run_all` to integrate against all ORMs.
