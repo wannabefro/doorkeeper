@@ -142,7 +142,7 @@ module Doorkeeper
         token_hash = {
                       :resource_owner_id => token.resource_owner_id,
                       :scopes => token.scopes,
-                      :expires_in_seconds => token.expires_in_seconds, 
+                      :expires_in_seconds => token.seconds_to_expire,
                       :application => { :uid => token.application.uid }
                      }
         token.as_json.should eq token_hash

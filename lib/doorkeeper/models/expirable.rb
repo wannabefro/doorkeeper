@@ -35,18 +35,21 @@ module Doorkeeper
         save validate: false
       end
 
-      # The expiration time since the token was issued
+      # Time in seconds for the token to expire
       #
-      # @return Time
-      def expired_time
-        created_at + expires_in.seconds
-      end
-
-      def expires_in_seconds
+      # @return [Integer] time in seconds
+      def seconds_to_expire
         return nil if expires_in.nil?
         expires = (created_at + expires_in.seconds) - Time.now
         expires_sec = expires.seconds.round(0)
         expires_sec > 0 ? expires_sec : 0
+      end
+
+      # The expiration time since the token was issued
+      #
+      # @return [Time]
+      def expired_time
+        created_at + expires_in.seconds
       end
       private :expired_time
     end

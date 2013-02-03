@@ -46,7 +46,7 @@ module Doorkeeper
       {
         :resource_owner_id => self.resource_owner_id,
         :scopes => self.scopes,
-        :expires_in_seconds => self.expires_in_seconds,
+        :expires_in_seconds => self.seconds_to_expire,
         :application => { :uid => self.application.uid }
       }
     end
