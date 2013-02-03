@@ -27,14 +27,14 @@ feature 'Private API' do
   end
 
   scenario 'client attempts to request protected resource with expired token' do
-    @token.update_column :expires_in, -100 # expires token
+    @token.expire!
     with_access_token_header @token.token
     visit '/full_protected_resources'
     response_status_should_be 401
   end
 
   scenario 'client requests protected resource with permanent token' do
-    @token.update_column :expires_in, nil # never expires
+    @token.expire! nil # never expires
     with_access_token_header @token.token
     visit '/full_protected_resources'
     page.body.should have_content("index")
