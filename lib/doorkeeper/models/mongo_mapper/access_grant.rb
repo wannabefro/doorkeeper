@@ -13,11 +13,7 @@ module Doorkeeper
     key :expires_in,        Integer
     key :redirect_uri,      String
     key :revoked_at,        DateTime
-    key :scopes,            String
-
-    def scopes=(value)
-      write_attribute :scopes, value if value.present?
-    end
+    key :scope,             String
 
     def self.create_indexes
       ensure_index :token, unique: true

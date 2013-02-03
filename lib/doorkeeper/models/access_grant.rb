@@ -6,7 +6,7 @@ module Doorkeeper
     include Doorkeeper::Models::Accessible
     include Doorkeeper::Models::Scopes
 
-    attr_accessible :resource_owner_id, :application_id, :expires_in, :redirect_uri, :scopes
+    attr_accessible :resource_owner_id, :application_id, :expires_in, :redirect_uri, :scope
 
     validates :resource_owner_id, :application_id, :token, :expires_in, :redirect_uri, presence: true
     validates :token, uniqueness: true

@@ -39,7 +39,7 @@ module Doorkeeper::OAuth
     it 'uses default scopes when none is required' do
       server.stub default_scopes: Scopes.from_string('default')
       subject.scope = nil
-      subject.scope.should  == 'default'
+      subject.scope.should == 'default'
       subject.scopes.should == Scopes.from_string('default')
     end
 

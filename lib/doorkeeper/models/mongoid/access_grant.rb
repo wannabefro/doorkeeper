@@ -1,10 +1,7 @@
-require 'doorkeeper/models/mongoid/scopes'
-
 module Doorkeeper
   class AccessGrant
     include Mongoid::Document
     include Mongoid::Timestamps
-    include Doorkeeper::Models::Mongoid::Scopes
 
     self.store_in collection: :oauth_access_grants
 
@@ -14,6 +11,7 @@ module Doorkeeper
     field :expires_in, type: Integer
     field :redirect_uri, type: String
     field :revoked_at, type: DateTime
+    field :scope
 
     index({ token: 1 }, { unique: true })
   end

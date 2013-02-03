@@ -41,9 +41,9 @@ module Doorkeeper
       end
 
       def issue_token
-        @access_token ||= Doorkeeper::AccessToken.create({
+        @access_token ||= Doorkeeper::AccessToken.create!({
           application_id:    client.id,
-          scopes:            scopes.to_s,
+          scope:             scopes.to_s,
           use_refresh_token: false,
           expires_in:        server.access_token_expires_in
         })

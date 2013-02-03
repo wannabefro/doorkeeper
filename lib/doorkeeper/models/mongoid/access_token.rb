@@ -1,10 +1,7 @@
-require 'doorkeeper/models/mongoid/scopes'
-
 module Doorkeeper
   class AccessToken
     include Mongoid::Document
     include Mongoid::Timestamps
-    include Doorkeeper::Models::Mongoid::Scopes
 
     self.store_in collection: :oauth_access_tokens
 
@@ -12,6 +9,7 @@ module Doorkeeper
     field :token, type: String
     field :expires_in, type: Integer
     field :revoked_at, type: DateTime
+    field :scope
 
     index({ token: 1 }, { unique: true })
     index({ refresh_token: 1 }, { unique: true, sparse: true })

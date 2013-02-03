@@ -42,7 +42,7 @@ module Doorkeeper
         @access_token = Doorkeeper::AccessToken.create!({
           application_id:    grant.application_id,
           resource_owner_id: grant.resource_owner_id,
-          scopes:            grant.scopes_string,
+          scope:             grant.scope,
           expires_in:        server.access_token_expires_in,
           use_refresh_token: server.refresh_token_enabled?
         })
