@@ -7,7 +7,6 @@ require 'dummy/config/environment'
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'generator_spec/test_case'
-require 'timecop'
 require 'database_cleaner'
 
 puts "====> Doorkeeper.orm = #{Doorkeeper.configuration.orm.inspect}"
