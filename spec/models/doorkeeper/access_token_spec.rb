@@ -82,7 +82,7 @@ module Doorkeeper
     describe '.matching_token_for' do
       let(:resource_owner_id) { 100 }
       let(:application)       { create :application }
-      let(:scope)             { Doorkeeper::OAuth::Scopes.from_string("public write") }
+      let(:scope)             { Doorkeeper.parse_scope("public write") }
       let(:default_attributes) do
         { application: application, resource_owner_id: resource_owner_id, scope: scope.to_s }
       end

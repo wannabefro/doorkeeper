@@ -75,4 +75,18 @@ module Doorkeeper
     raise "You already have the model #{model} configured as doorkeeper client" if @client.present?
     @client = model
   end
+
+  # Convert a string to scope object
+  #
+  # @example
+  #
+  #   Doorkeeper.parse_scope 'public'
+  #   # => <Scopes :public>
+  #   Doorkeeper.parse_scope 'public write'
+  #   # => <Scopes :public, :write>
+  #
+  # @return [Scopes]
+  def self.parse_scope(string)
+    OAuth::Scopes.from_string string
+  end
 end

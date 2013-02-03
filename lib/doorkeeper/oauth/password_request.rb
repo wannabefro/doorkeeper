@@ -37,7 +37,7 @@ module Doorkeeper
 
       def scopes
         @scopes ||= if @original_scopes.present?
-          Doorkeeper::OAuth::Scopes.from_string(@original_scopes)
+          Doorkeeper.parse_scope(@original_scopes)
         else
           server.default_scopes
         end

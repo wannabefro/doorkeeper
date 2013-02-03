@@ -30,13 +30,13 @@ module Doorkeeper::OAuth
       end
 
       it 'validates the current scope' do
-        server.stub scopes: Doorkeeper::OAuth::Scopes.from_string('another')
+        server.stub scopes: Doorkeeper.parse_scope('another')
         subject.validation.validate
         subject.error.should == :invalid_scope
       end
 
       it 'creates the token with scopes' do
-        server.stub scopes: Doorkeeper::OAuth::Scopes.from_string("public")
+        server.stub scopes: Doorkeeper.parse_scope("public")
         expect {
           subject.authorize
         }.to change { Doorkeeper::AccessToken.count }.by(1)

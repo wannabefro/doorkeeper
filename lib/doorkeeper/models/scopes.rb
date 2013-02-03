@@ -5,7 +5,7 @@ module Doorkeeper
       #
       # @return [Scopes]
       def oauth_scope
-        OAuth::Scopes.from_string self.scope
+        Doorkeeper.parse_scope self.scope
       end
     end
   end
