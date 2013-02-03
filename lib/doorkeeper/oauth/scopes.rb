@@ -6,9 +6,7 @@ module Doorkeeper
 
       def self.from_string(string)
         string ||= ""
-        new.tap do |scope|
-          scope.add *string.split
-        end
+        from_array string.split
       end
 
       def self.from_array(array)
@@ -20,7 +18,7 @@ module Doorkeeper
       delegate :each, to: :@scopes
 
       def initialize
-        @scopes = []
+        @scopes = Set.new
       end
 
       def exists?(scope)
@@ -28,16 +26,15 @@ module Doorkeeper
       end
 
       def add(*scopes)
-        @scopes.push *scopes.map(&:to_sym)
-        @scopes.uniq!
+        @scopes.merge scopes.map(&:to_sym)
       end
 
       def all
-        @scopes
+        @scopes.to_a
       end
 
       def to_s
-        @scopes.join(" ")
+        all.join(" ")
       end
 
       def has_scopes?(scopes)
@@ -53,7 +50,7 @@ module Doorkeeper
       end
 
       def <=>(other)
-        self.map(&:to_s).sort <=> other.map(&:to_s).sort
+        self.sort <=> other.sort
       end
     end
   end
