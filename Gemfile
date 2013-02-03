@@ -5,6 +5,7 @@ ENV['orm']   ||= 'active_record'
 source :rubygems
 
 gem 'jquery-rails'
+gem 'redcarpet'
 
 # Define Rails version
 rails_version = ENV['rails']
