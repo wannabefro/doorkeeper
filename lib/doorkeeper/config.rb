@@ -33,11 +33,11 @@ module Doorkeeper
       end
 
       def default_scopes(*scopes)
-        @config.instance_variable_set("@default_scopes", Doorkeeper::OAuth::Scopes.from_array(scopes))
+        @config.instance_variable_set("@default_scopes", Doorkeeper.parse_scope(scopes))
       end
 
       def optional_scopes(*scopes)
-        @config.instance_variable_set("@optional_scopes", Doorkeeper::OAuth::Scopes.from_array(scopes))
+        @config.instance_variable_set("@optional_scopes", Doorkeeper.parse_scope(scopes))
       end
 
       def client_credentials(*methods)

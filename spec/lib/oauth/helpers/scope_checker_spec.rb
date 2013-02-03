@@ -6,7 +6,7 @@ require 'doorkeeper/oauth/scopes'
 module Doorkeeper::OAuth::Helpers
   describe ScopeChecker, ".matches?" do
     def new_scope(*args)
-      Doorkeeper::OAuth::Scopes.from_array args
+      Doorkeeper.parse_scope args
     end
 
     it "true if scopes matches" do
