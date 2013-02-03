@@ -15,7 +15,7 @@ module Doorkeeper
     module Expirable
       # Check if the token is expired since it's creation
       def expired?
-        expires_in && Time.now > expired_time
+        expires_in && Time.now.utc > expired_time
       end
 
       # Reset the expiration time for a given token
@@ -41,7 +41,7 @@ module Doorkeeper
       def seconds_to_expire
         return nil if expires_in.nil?
 
-        expires     = expired_time - Time.now
+        expires     = expired_time - Time.now.utc
         expires_sec = expires.seconds.round(0)
 
         expires_sec > 0 ? expires_sec : 0

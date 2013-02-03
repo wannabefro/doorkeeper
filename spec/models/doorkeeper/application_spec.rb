@@ -25,7 +25,7 @@ module Doorkeeper
 
       it 'should destroy its access tokens' do
         FactoryGirl.create(:access_token, :application => new_application)
-        FactoryGirl.create(:access_token, :application => new_application, :revoked_at => Time.now)
+        FactoryGirl.create(:access_token, :application => new_application, :revoked_at => Time.now.utc)
         expect { new_application.destroy }.to change { Doorkeeper::AccessToken.count }.by(-2)
       end
     end
