@@ -41,7 +41,7 @@ module Doorkeeper::OAuth
     end
 
     it 'rejects revoked tokens' do
-      refresh_token.revoke
+      refresh_token.revoke!
       subject.validate
       subject.error.should == :invalid_request
     end

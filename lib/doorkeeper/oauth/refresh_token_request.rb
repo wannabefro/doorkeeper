@@ -36,7 +36,7 @@ module Doorkeeper
     private
 
       def revoke_and_create_access_token
-        refresh_token.revoke
+        refresh_token.revoke!
         create_access_token
       end
 

@@ -24,7 +24,7 @@ module Doorkeeper
       def authorize
         validate
         @response = if valid?
-          grant.revoke
+          grant.revoke!
           issue_token
           TokenResponse.new access_token
         else

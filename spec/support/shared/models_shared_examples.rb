@@ -21,7 +21,7 @@ shared_examples "a revocable token" do
     end
 
     it "is not accessible if token is revoked" do
-      subject.revoke
+      subject.revoke!
       subject.should_not be_accessible
     end
   end

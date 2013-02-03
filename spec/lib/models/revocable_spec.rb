@@ -6,14 +6,14 @@ describe 'Revocable' do
   subject do
     Class.new do
       include Doorkeeper::Models::Revocable
+      attr_accessor :revoked_at
     end.new
   end
 
   describe :revoke do
     it "updates :revoked_at attribute with current time" do
-      clock = double :now => stub
-      subject.should_receive(:update_column).with(:revoked_at, clock.now)
-      subject.revoke(clock)
+      subject.revoke
+      subject.revoked_at.should_not be_nil
     end
   end
 

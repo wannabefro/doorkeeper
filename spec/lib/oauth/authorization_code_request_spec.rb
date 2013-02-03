@@ -28,7 +28,7 @@ module Doorkeeper::OAuth
     end
 
     it 'requires the grant to be accessible' do
-      grant.revoke
+      grant.revoke!
       subject.validate
       subject.error.should == :invalid_grant
     end
