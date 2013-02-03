@@ -15,7 +15,7 @@ feature 'Resource Owner Password Credentials Flow inproperly set up' do
     scenario "should issue new token" do
       pending 'Check a way to supress warnings here (or handle config better)'
       expect {
-        post password_token_endpoint_url(:client => @client, :resource_owner => @resource_owner)
+        post password_token_endpoint_url(client: @client, resource_owner: @resource_owner)
       }.to_not change { Doorkeeper::AccessToken.count }
     end
   end
@@ -31,7 +31,7 @@ feature 'Resource Owner Password Credentials Flow' do
   context 'with valid user credentials' do
     scenario "should issue new token" do
       expect {
-        post password_token_endpoint_url(:client => @client, :resource_owner => @resource_owner)
+        post password_token_endpoint_url(client: @client, resource_owner: @resource_owner)
       }.to change { Doorkeeper::AccessToken.count }.by(1)
 
       token = Doorkeeper::AccessToken.first
@@ -42,7 +42,7 @@ feature 'Resource Owner Password Credentials Flow' do
     scenario "should issue a refresh token if enabled" do
       config_is_set(:refresh_token_enabled, true)
 
-      post password_token_endpoint_url(:client => @client, :resource_owner => @resource_owner)
+      post password_token_endpoint_url(client: @client, resource_owner: @resource_owner)
 
       token = Doorkeeper::AccessToken.first
 
@@ -53,15 +53,15 @@ feature 'Resource Owner Password Credentials Flow' do
   context "with invalid user credentials" do
     scenario "should not issue new token with bad password" do
       expect {
-        post password_token_endpoint_url( :client => @client,
-                                          :resource_owner_username => @resource_owner.name,
-                                          :resource_owner_password => 'wrongpassword')
+        post password_token_endpoint_url( client: @client,
+                                          resource_owner_username: @resource_owner.name,
+                                          resource_owner_password: 'wrongpassword')
       }.to_not change { Doorkeeper::AccessToken.count }
     end
 
     scenario "should not issue new token without credentials" do
       expect {
-        post password_token_endpoint_url( :client => @client)
+        post password_token_endpoint_url( client: @client)
       }.to_not change { Doorkeeper::AccessToken.count }
     end
   end

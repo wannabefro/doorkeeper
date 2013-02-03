@@ -21,7 +21,7 @@ module MongoMapper
   attr_accessible :name, :redirect_uri
 CONTENT
 
-        inject_into_file model_path, content, :after => "include MongoMapper::Document\n" if model_exists?
+        inject_into_file model_path, content, after: "include MongoMapper::Document\n" if model_exists?
       end
 
       def generate_indexes

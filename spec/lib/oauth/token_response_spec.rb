@@ -18,11 +18,11 @@ module Doorkeeper::OAuth
     describe '.body' do
       let(:access_token) do
         mock :access_token, {
-          :token => 'some-token',
-          :expires_in => '3600',
-          :scopes_string => 'two scopes',
-          :refresh_token => 'some-refresh-token',
-          :token_type => 'bearer'
+          token: 'some-token',
+          expires_in: '3600',
+          scopes_string: 'two scopes',
+          refresh_token: 'some-refresh-token',
+          token_type: 'bearer'
         }
       end
 

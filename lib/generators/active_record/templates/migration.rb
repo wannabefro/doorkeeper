@@ -13,6 +13,6 @@ class CreateDoorkeeperClientAs<%= table_name.camelize %> < ActiveRecord::Migrati
       t.timestamps
     end
 
-    add_index :<%= table_name %>, :uid, :unique => true
+    add_index :<%= table_name %>, :uid, unique: true
   end
 end

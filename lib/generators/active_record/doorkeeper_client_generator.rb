@@ -3,7 +3,7 @@ require 'rails/generators/active_record'
 module ActiveRecord
   module Generators
     class DoorkeeperClientGenerator < ActiveRecord::Generators::Base
-      argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
+      argument :attributes, type: :array, default: [], banner: "field:type field:type"
       source_root File.expand_path('../templates', __FILE__)
 
       def copy_migration
@@ -15,7 +15,7 @@ module ActiveRecord
       end
 
       def generate_model
-        invoke "active_record:model", [name], :migration => false unless model_exists?
+        invoke "active_record:model", [name], migration: false unless model_exists?
       end
 
       def inject_doorkeeper_content

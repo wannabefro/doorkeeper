@@ -1,12 +1,12 @@
 shared_examples "an accessible token" do
   describe :accessible? do
     it "is accessible if token is not expired" do
-      subject.stub :expired? => false
+      subject.stub expired?: false
       should be_accessible
     end
 
     it "is not accessible if token is expired" do
-      subject.stub :expired? => true
+      subject.stub expired?: true
       should_not be_accessible
     end
   end
@@ -53,7 +53,7 @@ shared_examples "an unique token" do
       token2 = FactoryGirl.create factory_name
       token2.token = token1.token
       expect {
-        token2.save!(:validate => false)
+        token2.save!(validate: false)
       }.to raise_error
     end
   end

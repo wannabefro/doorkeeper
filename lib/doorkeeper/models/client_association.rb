@@ -4,7 +4,7 @@ module Doorkeeper
       extend ActiveSupport::Concern
 
       included do
-        belongs_to :application, :class_name => "::#{Doorkeeper.client}", :foreign_key => 'application_id'
+        belongs_to :application, class_name: "::#{Doorkeeper.client}", foreign_key: 'application_id'
       end
     end
   end

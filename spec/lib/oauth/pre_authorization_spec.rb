@@ -2,14 +2,14 @@ require "spec_helper_integration"
 
 module Doorkeeper::OAuth
   describe PreAuthorization do
-    let(:server) { mock :server, :default_scopes => Scopes.new, :scopes => Scopes.from_string('public') }
-    let(:client) { mock :client, :redirect_uri => 'http://tst.com/auth' }
+    let(:server) { mock :server, default_scopes: Scopes.new, scopes: Scopes.from_string('public') }
+    let(:client) { mock :client, redirect_uri: 'http://tst.com/auth' }
 
     let :attributes do
       {
-        :response_type => 'code',
-        :redirect_uri => 'http://tst.com/auth',
-        :state => 'save-this'
+        response_type: 'code',
+        redirect_uri: 'http://tst.com/auth',
+        state: 'save-this'
       }
     end
 
@@ -37,7 +37,7 @@ module Doorkeeper::OAuth
     end
 
     it 'uses default scopes when none is required' do
-      server.stub :default_scopes => Scopes.from_string('default')
+      server.stub default_scopes: Scopes.from_string('default')
       subject.scope = nil
       subject.scope.should  == 'default'
       subject.scopes.should == Scopes.from_string('default')

@@ -14,7 +14,7 @@ class AddDoorkeeperClientTo<%= table_name.camelize %> < ActiveRecord::Migration
       # t.timestamps
     end
 
-    add_index :<%= table_name %>, :uid, :unique => true
+    add_index :<%= table_name %>, :uid, unique: true
   end
 
   def self.down

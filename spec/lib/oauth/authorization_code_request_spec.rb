@@ -2,18 +2,18 @@ require 'spec_helper_integration'
 
 module Doorkeeper::OAuth
   describe AuthorizationCodeRequest do
-    let(:server) { mock :server, :access_token_expires_in => 2.days, :refresh_token_enabled? => false }
+    let(:server) { mock :server, access_token_expires_in: 2.days, refresh_token_enabled?: false }
     let(:grant)  { FactoryGirl.create :access_grant }
     let(:client) { grant.application }
 
     subject do
-      AuthorizationCodeRequest.new server, grant, client, :redirect_uri => client.redirect_uri
+      AuthorizationCodeRequest.new server, grant, client, redirect_uri: client.redirect_uri
     end
 
     it 'issues a new token for the client' do
       expect do
         subject.authorize
-      end.to change { Doorkeeper::AccessToken.where(:application_id => client.id).count }.by(1)
+      end.to change { Doorkeeper::AccessToken.where(application_id: client.id).count }.by(1)
     end
 
     it "issues the token with same grant's scopes" do

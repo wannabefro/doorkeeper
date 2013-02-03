@@ -2,7 +2,7 @@ require 'spec_helper_integration'
 
 module Doorkeeper::OAuth
   describe ClientCredentialsRequest do
-    let(:server) { mock :server, :default_scopes => Doorkeeper::OAuth::Scopes.new, :access_token_expires_in => 2.hours }
+    let(:server) { mock :server, default_scopes: Doorkeeper::OAuth::Scopes.new, access_token_expires_in: 2.hours }
     let(:client) { FactoryGirl.create(:application) }
 
     subject { ClientCredentialsRequest.new(server, client) }
@@ -10,7 +10,7 @@ module Doorkeeper::OAuth
     it 'issues an access token for the current client' do
       expect do
         subject.authorize
-      end.to change { Doorkeeper::AccessToken.where(:application_id => client.id).count }.by(1)
+      end.to change { Doorkeeper::AccessToken.where(application_id: client.id).count }.by(1)
     end
 
     it 'requires the client' do
@@ -26,17 +26,17 @@ module Doorkeeper::OAuth
 
     context 'with scopes' do
       subject do
-        ClientCredentialsRequest.new(server, client, :scope => 'public')
+        ClientCredentialsRequest.new(server, client, scope: 'public')
       end
 
       it 'validates the current scope' do
-        server.stub :scopes => Doorkeeper::OAuth::Scopes.from_string('another')
+        server.stub scopes: Doorkeeper::OAuth::Scopes.from_string('another')
         subject.validation.validate
         subject.error.should == :invalid_scope
       end
 
       it 'creates the token with scopes' do
-        server.stub :scopes => Doorkeeper::OAuth::Scopes.from_string("public")
+        server.stub scopes: Doorkeeper::OAuth::Scopes.from_string("public")
         expect {
           subject.authorize
         }.to change { Doorkeeper::AccessToken.count }.by(1)

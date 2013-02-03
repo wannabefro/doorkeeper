@@ -42,14 +42,14 @@ module Doorkeeper
 
       def issue_token
         @access_token ||= Doorkeeper::AccessToken.create({
-          :application_id    => client.id,
-          :scopes            => scopes.to_s,
-          :use_refresh_token => false,
-          :expires_in        => server.access_token_expires_in
+          application_id:    client.id,
+          scopes:            scopes.to_s,
+          use_refresh_token: false,
+          expires_in:        server.access_token_expires_in
         })
       end
 
-      delegate :error, :to => :validation
+      delegate :error, to: :validation
       def validation
         @validation ||= Validation.new(server, self)
       end

@@ -2,8 +2,8 @@ require 'spec_helper_integration'
 
 module Doorkeeper::OAuth
   describe RefreshTokenRequest do
-    let(:server)         { mock :server, :access_token_expires_in => 2.minutes }
-    let!(:refresh_token) { FactoryGirl.create(:access_token, :use_refresh_token => true) }
+    let(:server)         { mock :server, access_token_expires_in: 2.minutes }
+    let!(:refresh_token) { FactoryGirl.create(:access_token, use_refresh_token: true) }
     let(:client)         { refresh_token.application }
 
     subject do
@@ -13,7 +13,7 @@ module Doorkeeper::OAuth
     it 'issues a new token for the client' do
       expect do
         subject.authorize
-      end.to change { Doorkeeper::AccessToken.where(:application_id => client.id).count }.by(1)
+      end.to change { Doorkeeper::AccessToken.where(application_id: client.id).count }.by(1)
     end
 
     it 'revokes the previous token' do

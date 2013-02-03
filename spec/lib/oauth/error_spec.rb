@@ -11,7 +11,7 @@ module Doorkeeper::OAuth
 
     describe :description do
       it 'is translated from translation messages' do
-        I18n.should_receive(:translate).with(:some_error, :scope => [:doorkeeper, :errors, :messages])
+        I18n.should_receive(:translate).with(:some_error, scope: [:doorkeeper, :errors, :messages])
         subject.description
       end
     end

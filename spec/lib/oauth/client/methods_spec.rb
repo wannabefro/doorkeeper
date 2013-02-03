@@ -15,7 +15,7 @@ module Doorkeeper::OAuth::Client
 
     describe :from_params do
       it 'returns credentials from parameters when Authorization header is not available' do
-        request     = stub :parameters => { :client_id => client_id, :client_secret => client_secret }
+        request     = stub parameters: { client_id: client_id, client_secret: client_secret }
         uid, secret = subject.from_params(request)
 
         uid.should    == "some-uid"
@@ -23,7 +23,7 @@ module Doorkeeper::OAuth::Client
       end
 
       it 'is blank when there are no credentials' do
-        request     = stub :parameters => {}
+        request     = stub parameters: {}
         uid, secret = subject.from_params(request)
 
         uid.should    be_blank
@@ -35,7 +35,7 @@ module Doorkeeper::OAuth::Client
       let(:credentials) { Base64.encode64("#{client_id}:#{client_secret}") }
 
       it 'decodes the credentials' do
-        request     = stub :authorization => "Basic #{credentials}"
+        request     = stub authorization: "Basic #{credentials}"
         uid, secret = subject.from_basic(request)
 
         uid.should    == "some-uid"
@@ -43,7 +43,7 @@ module Doorkeeper::OAuth::Client
       end
 
       it 'is blank if Authorization is not Basic' do
-        request     = stub :authorization => "#{credentials}"
+        request     = stub authorization: "#{credentials}"
         uid, secret = subject.from_basic(request)
 
         uid.should    be_blank

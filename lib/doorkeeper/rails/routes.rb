@@ -29,7 +29,7 @@ module Doorkeeper
 
       def generate_routes!(options)
         @mapping = Mapper.new.map(&@options)
-        routes.scope 'oauth', :as => 'oauth' do
+        routes.scope 'oauth', as: 'oauth' do
           map_route(:authorizations, :authorization_routes)
           map_route(:tokens, :token_routes)
           map_route(:applications, :application_routes)
@@ -46,32 +46,32 @@ module Doorkeeper
       end
 
       def authorization_routes(mapping)
-        routes.scope :controller => mapping[:controllers] do
-          routes.match 'authorize/:code', :via => :get,    :action => :show,    :as => "#{mapping[:as]}_code"
-          routes.match 'authorize',       :via => :get,    :action => :new,     :as => mapping[:as]
-          routes.match 'authorize',       :via => :post,   :action => :create,  :as => mapping[:as]
-          routes.match 'authorize',       :via => :delete, :action => :destroy, :as => mapping[:as]
+        routes.scope controller: mapping[:controllers] do
+          routes.match 'authorize/:code', via: :get,    action: :show,    as: "#{mapping[:as]}_code"
+          routes.match 'authorize',       via: :get,    action: :new,     as: mapping[:as]
+          routes.match 'authorize',       via: :post,   action: :create,  as: mapping[:as]
+          routes.match 'authorize',       via: :delete, action: :destroy, as: mapping[:as]
         end
       end
 
       def token_routes(mapping)
-        routes.scope :controller => mapping[:controllers] do
-          routes.match 'token', :via => :post, :action => :create, :as => mapping[:as]
+        routes.scope controller: mapping[:controllers] do
+          routes.match 'token', via: :post, action: :create, as: mapping[:as]
         end
       end
 
       def token_info_routes(mapping)
-        routes.scope :controller => mapping[:controllers] do
-          routes.match 'token/info', :via => :get, :action => :show, :as => mapping[:as]
+        routes.scope controller: mapping[:controllers] do
+          routes.match 'token/info', via: :get, action: :show, as: mapping[:as]
         end
       end
 
       def application_routes(mapping)
-        routes.resources :applications, :controller => mapping[:controllers]
+        routes.resources :applications, controller: mapping[:controllers]
       end
 
       def authorized_applications_routes(mapping)
-        routes.resources :authorized_applications, :only => [:index, :destroy], :controller => mapping[:controllers]
+        routes.resources :authorized_applications, only: [:index, :destroy], controller: mapping[:controllers]
       end
     end
   end

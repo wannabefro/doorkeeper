@@ -7,10 +7,10 @@ module Doorkeeper
 
       include Doorkeeper::Validations
 
-      validate :attributes,   :error => :invalid_request
-      validate :client,       :error => :invalid_client
-      validate :grant,        :error => :invalid_grant
-      validate :redirect_uri, :error => :invalid_grant
+      validate :attributes,   error: :invalid_request
+      validate :client,       error: :invalid_client
+      validate :grant,        error: :invalid_grant
+      validate :redirect_uri, error: :invalid_grant
 
       attr_accessor :server, :grant, :client, :redirect_uri, :access_token
 
@@ -40,11 +40,11 @@ module Doorkeeper
 
       def issue_token
         @access_token = Doorkeeper::AccessToken.create!({
-          :application_id    => grant.application_id,
-          :resource_owner_id => grant.resource_owner_id,
-          :scopes            => grant.scopes_string,
-          :expires_in        => server.access_token_expires_in,
-          :use_refresh_token => server.refresh_token_enabled?
+          application_id:    grant.application_id,
+          resource_owner_id: grant.resource_owner_id,
+          scopes:            grant.scopes_string,
+          expires_in:        server.access_token_expires_in,
+          use_refresh_token: server.refresh_token_enabled?
         })
       end
 

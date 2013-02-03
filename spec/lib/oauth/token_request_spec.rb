@@ -4,17 +4,17 @@ module Doorkeeper::OAuth
   describe TokenRequest do
     let :pre_auth do
       mock(:pre_auth, {
-        :client => mock(:application, :id => 9990),
-        :redirect_uri => 'http://tst.com/cb',
-        :state => nil,
-        :scopes => nil,
-        :error => nil,
-        :authorizable? => true
+        client: mock(:application, id: 9990),
+        redirect_uri: 'http://tst.com/cb',
+        state: nil,
+        scopes: nil,
+        error: nil,
+        authorizable?: true
       })
     end
 
     let :owner do
-      mock :owner, :id => 7866
+      mock :owner, id: 7866
     end
 
     subject do
@@ -32,14 +32,14 @@ module Doorkeeper::OAuth
     end
 
     it 'does not create token when not authorizable' do
-      pre_auth.stub :authorizable? => false
+      pre_auth.stub authorizable?: false
       expect do
         subject.authorize
       end.to_not change { Doorkeeper::AccessToken.count }
     end
 
     it 'returns a error response' do
-      pre_auth.stub :authorizable? => false
+      pre_auth.stub authorizable?: false
       subject.authorize.should be_a(ErrorResponse)
     end
   end

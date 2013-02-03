@@ -6,9 +6,9 @@ module Doorkeeper
 
         included do
           belongs_to :application,
-                     :class_name => "::#{Doorkeeper.client}",
-                     :foreign_key => 'application_id',
-                     :inverse_of => :application
+                     class_name: "::#{Doorkeeper.client}",
+                     foreign_key: 'application_id',
+                     inverse_of: :application
         end
       end
     end

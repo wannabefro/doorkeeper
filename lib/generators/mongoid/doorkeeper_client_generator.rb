@@ -21,7 +21,7 @@ module Mongoid
   index({ uid: 1 }, { unique: true })
 CONTENT
 
-        inject_into_file model_path, content, :after => "include Mongoid::Document\n" if model_exists?
+        inject_into_file model_path, content, after: "include Mongoid::Document\n" if model_exists?
       end
 
     private

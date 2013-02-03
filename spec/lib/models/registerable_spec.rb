@@ -38,7 +38,7 @@ describe Doorkeeper::Models::Registerable do
     end
 
     it 'rejects if test uri is disabled' do
-      RedirectUriValidator.stub :test_redirect_uri => nil
+      RedirectUriValidator.stub test_redirect_uri: nil
       subject.redirect_uri = "urn:some:test"
       subject.should_not be_valid
     end

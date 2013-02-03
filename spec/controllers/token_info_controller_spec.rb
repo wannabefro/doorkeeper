@@ -29,7 +29,7 @@ describe Doorkeeper::TokenInfoController do
 
     describe "invalid token response" do
       before(:each) do
-        controller.stub(:doorkeeper_token => nil)
+        controller.stub(doorkeeper_token: nil)
       end
       it "responds with 401 when doorkeeper_token is not valid" do
         do_get
@@ -37,15 +37,15 @@ describe Doorkeeper::TokenInfoController do
       end
 
       it "responds with 401 when doorkeeper_token is invalid, expired or revoked" do
-        controller.stub(:doorkeeper_token => doorkeeper_token)
-        doorkeeper_token.stub(:accessible? => false)
+        controller.stub(doorkeeper_token: doorkeeper_token)
+        doorkeeper_token.stub(accessible?: false)
         do_get
         expect(response.status).to eq 401
       end
 
       it "responds body message for error" do
         do_get
-        expect(response.body).to eq(Doorkeeper::OAuth::ErrorResponse.new(:name => :invalid_request, :status => :unauthorized).body.to_json)
+        expect(response.body).to eq(Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request, status: :unauthorized).body.to_json)
       end
     end
 

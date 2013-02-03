@@ -1,6 +1,6 @@
 module AuthorizationRequestHelper
   def resource_owner_is_authenticated(resource_owner = nil)
-    resource_owner ||= User.create!(:name => "Joe", :password => "sekret")
+    resource_owner ||= User.create!(name: "Joe", password: "sekret")
     Doorkeeper.configuration.instance_variable_set(:@authenticate_resource_owner, proc { resource_owner })
   end
 
@@ -17,11 +17,11 @@ module AuthorizationRequestHelper
   end
 
   def client_should_be_authorized(client)
-    Doorkeeper::AccessGrant.where(:application_id => client.id).count.should be 1
+    Doorkeeper::AccessGrant.where(application_id: client.id).count.should be 1
   end
 
   def client_should_not_be_authorized(client)
-    Doorkeeper::AccessGrant.where(:application_id => client.id).count.should be 0
+    Doorkeeper::AccessGrant.where(application_id: client.id).count.should be 0
   end
 
   def i_should_be_on_client_callback(client)
@@ -29,4 +29,4 @@ module AuthorizationRequestHelper
   end
 end
 
-RSpec.configuration.send :include, AuthorizationRequestHelper, :type => :request
+RSpec.configuration.send :include, AuthorizationRequestHelper, type: :request

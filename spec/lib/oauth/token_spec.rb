@@ -41,7 +41,7 @@ module Doorkeeper
 
       describe :from_access_token_param do
         it 'returns token from access_token parameter' do
-          request = stub :parameters => { :access_token => 'some-token' }
+          request = stub parameters: { access_token: 'some-token' }
           token   = Token.from_access_token_param(request)
           token.should == "some-token"
         end
@@ -49,7 +49,7 @@ module Doorkeeper
 
       describe :from_bearer_param do
         it 'returns token from bearer_token parameter' do
-          request = stub :parameters => { :bearer_token => 'some-token' }
+          request = stub parameters: { bearer_token: 'some-token' }
           token   = Token.from_bearer_param(request)
           token.should == "some-token"
         end
@@ -57,13 +57,13 @@ module Doorkeeper
 
       describe :from_bearer_authorization do
         it 'returns token from authorization bearer' do
-          request = stub :authorization => "Bearer SomeToken"
+          request = stub authorization: "Bearer SomeToken"
           token   = Token.from_bearer_authorization(request)
           token.should == "SomeToken"
         end
 
         it 'does not return token if authorization is not bearer' do
-          request = stub :authorization => "MAC SomeToken"
+          request = stub authorization: "MAC SomeToken"
           token   = Token.from_bearer_authorization(request)
           token.should be_blank
         end

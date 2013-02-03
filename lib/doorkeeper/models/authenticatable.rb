@@ -5,7 +5,7 @@ module Doorkeeper
 
       module ClassMethods
         def find_for_oauth_authentication(uid)
-          where(:uid => uid).first
+          where(uid: uid).first
         end
 
         def oauth_authenticate(uid, secret)

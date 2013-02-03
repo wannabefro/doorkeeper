@@ -14,7 +14,7 @@ module Doorkeeper
       @application  = Doorkeeper.client.new(params[:application])
 
       if @application.save
-        redirect_to oauth_application_url(@application), :notice => t('doorkeeper.flash.applications.create.notice')
+        redirect_to oauth_application_url(@application), notice: t('doorkeeper.flash.applications.create.notice')
       else
         render :new
       end
@@ -32,7 +32,7 @@ module Doorkeeper
       @application = Doorkeeper.client.find(params[:id])
 
       if @application.update_attributes(params[:application])
-        redirect_to oauth_application_url(@application), :notice => t('doorkeeper.flash.applications.update.notice')
+        redirect_to oauth_application_url(@application), notice: t('doorkeeper.flash.applications.update.notice')
       else
         render :edit
       end
@@ -42,7 +42,7 @@ module Doorkeeper
       @application = Doorkeeper.client.find(params[:id])
       @application.destroy
 
-      redirect_to :oauth_applications, :notice => t('doorkeeper.flash.applications.destroy.notice')
+      redirect_to :oauth_applications, notice: t('doorkeeper.flash.applications.destroy.notice')
     end
   end
 end

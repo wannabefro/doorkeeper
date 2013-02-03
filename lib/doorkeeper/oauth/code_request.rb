@@ -25,7 +25,7 @@ module Doorkeeper
 
       def deny
         pre_auth.error = :access_denied
-        ErrorResponse.from_request(pre_auth, :redirect_uri => pre_auth.redirect_uri)
+        ErrorResponse.from_request(pre_auth, redirect_uri: pre_auth.redirect_uri)
       end
     end
   end

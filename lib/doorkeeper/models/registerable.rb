@@ -4,7 +4,7 @@ module Doorkeeper
       extend ActiveSupport::Concern
 
       included do
-        validates :redirect_uri, :redirect_uri => true, :presence => true
+        validates :redirect_uri, redirect_uri: true, presence: true
 
         before_create :generate_credentials
       end
@@ -19,7 +19,7 @@ module Doorkeeper
       end
 
       def generate_credentials!
-        generate_credentials && save(:validate => false)
+        generate_credentials && save(validate: false)
       end
 
       def generate_uid
@@ -27,7 +27,7 @@ module Doorkeeper
       end
 
       def generate_uid!
-        generate_uid && save(:validate => false)
+        generate_uid && save(validate: false)
       end
 
       def generate_secret
@@ -35,7 +35,7 @@ module Doorkeeper
       end
 
       def generate_secret!
-        generate_secret && save(:validate => false)
+        generate_secret && save(validate: false)
       end
 
       def reset_credentials
@@ -45,7 +45,7 @@ module Doorkeeper
 
       def reset_credentials!
         reset_credentials
-        save :validate => false
+        save validate: false
       end
     end
   end
