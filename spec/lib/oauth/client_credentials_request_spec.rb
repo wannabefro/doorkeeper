@@ -3,7 +3,7 @@ require 'spec_helper_integration'
 module Doorkeeper::OAuth
   describe ClientCredentialsRequest do
     let(:server) { mock :server, default_scopes: Doorkeeper::OAuth::Scopes.new, access_token_expires_in: 2.hours }
-    let(:client) { FactoryGirl.create(:application) }
+    let(:client) { create(:application) }
 
     subject { ClientCredentialsRequest.new(server, client) }
 

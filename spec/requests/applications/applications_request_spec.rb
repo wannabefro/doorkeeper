@@ -23,8 +23,8 @@ end
 
 feature 'Listing applications' do
   background do
-    FactoryGirl.create :application, name: 'Oauth Dude'
-    FactoryGirl.create :application, name: 'Awesome App'
+    create :application, name: 'Oauth Dude'
+    create :application, name: 'Awesome App'
   end
 
   scenario 'application list' do
@@ -36,7 +36,7 @@ end
 
 feature 'Show application' do
   let :app do
-    FactoryGirl.create :application, name: 'Just another oauth app'
+    create :application, name: 'Just another oauth app'
   end
 
   scenario 'visiting application page' do
@@ -47,7 +47,7 @@ end
 
 feature 'Edit application' do
   let :app do
-    FactoryGirl.create :application, name: 'OMG my app'
+    create :application, name: 'OMG my app'
   end
 
   background do
@@ -71,7 +71,7 @@ end
 
 feature 'Destroy application' do
   background do
-    @app = FactoryGirl.create :application
+    @app = create :application
   end
 
   scenario 'deleting an application from list' do

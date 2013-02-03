@@ -20,6 +20,8 @@ ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 Dir["#{File.dirname(__FILE__)}/support/{dependencies,helpers,shared}/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+
   config.mock_with :rspec
 
   config.infer_base_class_for_anonymous_controllers = false

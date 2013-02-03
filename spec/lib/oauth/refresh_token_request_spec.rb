@@ -3,7 +3,7 @@ require 'spec_helper_integration'
 module Doorkeeper::OAuth
   describe RefreshTokenRequest do
     let(:server)         { mock :server, access_token_expires_in: 2.minutes }
-    let!(:refresh_token) { FactoryGirl.create(:access_token, use_refresh_token: true) }
+    let!(:refresh_token) { create(:access_token, use_refresh_token: true) }
     let(:client)         { refresh_token.application }
 
     subject do
@@ -35,7 +35,7 @@ module Doorkeeper::OAuth
     end
 
     it "requires the token's client and current client to match" do
-      subject.client = FactoryGirl.create(:application)
+      subject.client = create(:application)
       subject.validate
       subject.error.should == :invalid_client
     end

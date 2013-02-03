@@ -32,7 +32,7 @@ shared_examples "an unique token" do
     it "is unique" do
       tokens = []
       3.times do
-        token = FactoryGirl.create(factory_name).token
+        token = create(factory_name).token
         tokens.should_not include(token)
       end
     end
@@ -42,15 +42,15 @@ shared_examples "an unique token" do
     end
 
     it "is not valid if token exists" do
-      token1 = FactoryGirl.create factory_name
-      token2 = FactoryGirl.create factory_name
+      token1 = create factory_name
+      token2 = create factory_name
       token2.token = token1.token
       token2.should_not be_valid
     end
 
     it 'expects database to throw an error when tokens are the same' do
-      token1 = FactoryGirl.create factory_name
-      token2 = FactoryGirl.create factory_name
+      token1 = create factory_name
+      token2 = create factory_name
       token2.token = token1.token
       expect {
         token2.save!(validate: false)

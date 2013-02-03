@@ -2,7 +2,7 @@ require 'spec_helper_integration'
 
 describe Doorkeeper::Models::Authenticatable do
   subject do
-    FactoryGirl.create :application
+    create :application
   end
 
   describe '.find_for_oauth_authentication' do

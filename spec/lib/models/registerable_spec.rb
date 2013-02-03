@@ -2,7 +2,7 @@ require 'spec_helper_integration'
 
 describe Doorkeeper::Models::Registerable do
   subject do
-    FactoryGirl.create :application
+    create :application
   end
 
   it 'requires redirect_uri to be present' do

@@ -3,7 +3,7 @@ require 'spec_helper_integration'
 module Doorkeeper::OAuth
   describe PasswordRequest do
     let(:server) { mock :server, default_scopes: Doorkeeper::OAuth::Scopes.new, access_token_expires_in: 2.hours, refresh_token_enabled?: false }
-    let(:client) { FactoryGirl.create(:application) }
+    let(:client) { create(:application) }
     let(:owner)  { mock :owner, id: 99 }
 
     subject do

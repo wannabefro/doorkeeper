@@ -3,7 +3,7 @@ require 'spec_helper_integration'
 module Doorkeeper::OAuth
   describe AuthorizationCodeRequest do
     let(:server) { mock :server, access_token_expires_in: 2.days, refresh_token_enabled?: false }
-    let(:grant)  { FactoryGirl.create :access_grant }
+    let(:grant)  { create :access_grant }
     let(:client) { grant.application }
 
     subject do
@@ -58,7 +58,7 @@ module Doorkeeper::OAuth
     end
 
     it "matches the client with grant's one" do
-      subject.client = FactoryGirl.create :application
+      subject.client = create :application
       subject.validate
       subject.error.should == :invalid_grant
     end
