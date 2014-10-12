@@ -15,9 +15,9 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ["lib"]
+  s.extensions    << 'ext/mkrf_conf.rb'
 
   s.add_dependency "railties", ">= 3.1"
-  s.add_dependency "responders", "~> 2.0"
 
   s.add_development_dependency "sqlite3", "~> 1.3.5"
   s.add_development_dependency "rspec-rails", "~> 2.99.0"
